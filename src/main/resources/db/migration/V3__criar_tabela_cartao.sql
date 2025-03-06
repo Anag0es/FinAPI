@@ -1,0 +1,14 @@
+CREATE TABLE cards (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    number VARCHAR(50) NOT NULL,
+    expiration VARCHAR(7) NOT NULL,
+    limit_amount DECIMAL(19, 2) NOT NULL,
+    brand VARCHAR(50) NOT NULL,
+    user_id UUID NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_cards_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
