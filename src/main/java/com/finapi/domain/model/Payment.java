@@ -1,6 +1,6 @@
 package com.finapi.domain.model;
 
-import com.finapi.domain.enums.PaymentMethodTYype;
+import com.finapi.domain.enums.PaymentMethodType;
 import com.finapi.domain.enums.PaymentType;
 import com.finapi.domain.repository.PaymentMain;
 
@@ -14,14 +14,14 @@ public class Payment {
     private LocalDate dueDate;
     private LocalDate paymentDate;
     private PaymentType status;
-    private PaymentMethodTYype paymentMethod;
+    private PaymentMethodType paymentMethod;
     private Integer installments;
     private Integer totalInstallments;
     private PaymentMain paymentMain;
 
     public Payment() {}
 
-    public Payment(Long id, BigDecimal amount, LocalDate dueDate, LocalDate paymentDate, PaymentType status, PaymentMethodTYype paymentMethod, Integer installments, Integer totalInstallments, PaymentMain paymentMain) {
+    public Payment(Long id, BigDecimal amount, LocalDate dueDate, LocalDate paymentDate, PaymentType status, PaymentMethodType paymentMethod, Integer installments, Integer totalInstallments, PaymentMain paymentMain) {
         this.id = id;
         this.amount = amount;
         this.dueDate = dueDate;
@@ -73,11 +73,11 @@ public class Payment {
         this.status = status;
     }
 
-    public PaymentMethodTYype getPaymentMethod() {
+    public PaymentMethodType getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(PaymentMethodTYype paymentMethod) {
+    public void setPaymentMethod(PaymentMethodType paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
