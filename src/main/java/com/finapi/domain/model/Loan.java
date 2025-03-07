@@ -2,12 +2,13 @@ package com.finapi.domain.model;
 
 import com.finapi.domain.enums.LoanStatus;
 import com.finapi.domain.enums.PeriodicityType;
+import com.finapi.domain.repository.PaymentMain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Loan {
+public class Loan implements PaymentMain {
 
     private Long id;
     private PeriodicityType type;
@@ -19,12 +20,13 @@ public class Loan {
     private String description;
     private LoanStatus status;
     private User user;
+    private Tag tag;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public Loan() {}
 
-    public Loan(Long id, PeriodicityType type, BigDecimal totalAmount, BigDecimal installmentAmount, Date startDate, Date endDate, BigDecimal interestRate, String description, LoanStatus status, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Loan(Long id, PeriodicityType type, BigDecimal totalAmount, BigDecimal installmentAmount, Date startDate, Date endDate, BigDecimal interestRate, String description, LoanStatus status, User user, Tag tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.type = type;
         this.totalAmount = totalAmount;
@@ -35,6 +37,7 @@ public class Loan {
         this.description = description;
         this.status = status;
         this.user = user;
+        this.tag = tag;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -117,6 +120,14 @@ public class Loan {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 
     public LocalDateTime getCreatedAt() {

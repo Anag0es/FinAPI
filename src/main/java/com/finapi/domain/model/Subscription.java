@@ -1,12 +1,13 @@
 package com.finapi.domain.model;
 
 import com.finapi.domain.enums.Status;
+import com.finapi.domain.repository.PaymentMain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Subscription {
+public class Subscription implements PaymentMain {
 
     private Long id;
     private String name;

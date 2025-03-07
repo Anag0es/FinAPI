@@ -2,11 +2,12 @@ package com.finapi.domain.model;
 
 import com.finapi.domain.enums.PeriodicityType;
 import com.finapi.domain.enums.TransactionType;
+import com.finapi.domain.repository.PaymentMain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Transaction {
+public class Transaction implements PaymentMain {
 
     private Long id;
     private TransactionType type;
@@ -18,12 +19,13 @@ public class Transaction {
     private BankAccount bankAccount;
     private Card card;
     private User user;
+    private Tag tag;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public Transaction() {}
 
-    public Transaction(Long id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Transaction(Long id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, Tag tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -34,6 +36,7 @@ public class Transaction {
         this.bankAccount = bankAccount;
         this.card = card;
         this.user = user;
+        this.tag = tag;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -116,6 +119,14 @@ public class Transaction {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -17,12 +17,13 @@ public class FinancialReserve {
     private Date startDate;
     private String description;
     private User user;
+    private Tag tag;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public FinancialReserve() {}
 
-    public FinancialReserve(Long id, String name, ReservesType type, BigDecimal initialAmount, BigDecimal currentAmount, BigDecimal rate, Date startDate, String description, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public FinancialReserve(Long id, String name, ReservesType type, BigDecimal initialAmount, BigDecimal currentAmount, BigDecimal rate, Date startDate, String description, User user, Tag tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -32,6 +33,7 @@ public class FinancialReserve {
         this.startDate = startDate;
         this.description = description;
         this.user = user;
+        this.tag = tag;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -106,6 +108,14 @@ public class FinancialReserve {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 
     public LocalDateTime getCreatedAt() {
