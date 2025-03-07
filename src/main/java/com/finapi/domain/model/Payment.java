@@ -1,0 +1,107 @@
+package com.finapi.domain.model;
+
+import com.finapi.domain.enums.PaymentMethodTYype;
+import com.finapi.domain.enums.PaymentType;
+import com.finapi.domain.repository.PaymentMain;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public class Payment {
+
+    private Long id;
+    private BigDecimal amount;
+    private LocalDate dueDate;
+    private LocalDate paymentDate;
+    private PaymentType status;
+    private PaymentMethodTYype paymentMethod;
+    private Integer installments;
+    private Integer totalInstallments;
+    private PaymentMain paymentMain;
+
+    public Payment() {}
+
+    public Payment(Long id, BigDecimal amount, LocalDate dueDate, LocalDate paymentDate, PaymentType status, PaymentMethodTYype paymentMethod, Integer installments, Integer totalInstallments, PaymentMain paymentMain) {
+        this.id = id;
+        this.amount = amount;
+        this.dueDate = dueDate;
+        this.paymentDate = paymentDate;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.installments = installments;
+        this.totalInstallments = totalInstallments;
+        this.paymentMain = paymentMain;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public PaymentType getStatus() {
+        return status;
+    }
+
+    public void setStatus(PaymentType status) {
+        this.status = status;
+    }
+
+    public PaymentMethodTYype getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethodTYype paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Integer getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(Integer installments) {
+        this.installments = installments;
+    }
+
+    public Integer getTotalInstallments() {
+        return totalInstallments;
+    }
+
+    public void setTotalInstallments(Integer totalInstallments) {
+        this.totalInstallments = totalInstallments;
+    }
+
+    public PaymentMain getPaymentMain() {
+        return paymentMain;
+    }
+
+    public void setPaymentMain(PaymentMain paymentMain) {
+        this.paymentMain = paymentMain;
+    }
+}
