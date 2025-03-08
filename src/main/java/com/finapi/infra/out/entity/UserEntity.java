@@ -1,28 +1,43 @@
-package com.finapi.domain.model;
+package com.finapi.infra.out.entity;
 
 import com.finapi.domain.enums.Roles;
 import com.finapi.domain.enums.Status;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class User {
+@Entity
+@Table(name = "users")
+public class UserEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private String name;
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private Roles role;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDateTime lastLogin;
     private String resetToken;
     private LocalDateTime resetTokenExpiration;
+
+    @Value("${localDateTime.now}")
     private LocalDateTime createdAt;
+
+    @Value("${localDateTime.now}")
     private LocalDateTime updatedAt;
 
-    public User() {}
+    public UserEntity() {}
 
-    public User(UUID id, String name, String email, String password, Roles role, Status status, LocalDateTime lastLogin, String resetToken, LocalDateTime resetTokenExpiration, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public UserEntity(UUID id, String name, String email, String password, Roles role, Status status, LocalDateTime lastLogin, String resetToken, LocalDateTime resetTokenExpiration, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -68,11 +83,11 @@ public class User {
         this.password = password;
     }
 
-        public Roles getRole() {
+    public Roles getRoles() {
         return role;
     }
 
-        public void setRole(Roles role) {
+    public void setRoles(Roles role) {
         this.role = role;
     }
 
