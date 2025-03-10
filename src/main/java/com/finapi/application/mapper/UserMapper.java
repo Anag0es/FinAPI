@@ -5,33 +5,43 @@ import com.finapi.infra.out.entity.UserEntity;
 
 public class UserMapper {
 
-    public static User toDomain(UserEntity entity){
-        User user = new User();
+    public static User toDomain(UserEntity entity) {
+        if (entity == null) {
+            return null;
+        }
 
-        user.setId(entity.getId());
-        user.setName(entity.getName());
-        user.setEmail(entity.getEmail());
-        user.setPassword(entity.getPassword());
-        user.setRole(entity.getRoles());
-        user.setStatus(entity.getStatus());
-        user.setCreatedAt(entity.getCreatedAt());
-        user.setUpdatedAt(entity.getUpdatedAt());
-
-        return user;
+        return new User(
+                entity.getId(),
+                entity.getName(),
+                entity.getEmail(),
+                entity.getPassword(),
+                entity.getRole(),
+                entity.getStatus(),
+                entity.getLastLogin(),
+                entity.getResetToken(),
+                entity.getResetTokenExpiration(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt()
+        );
     }
 
-    public static UserEntity toEntity(User user){
-        UserEntity entity = new UserEntity();
+    public static UserEntity toEntity(User user) {
+        if (user == null) {
+            return null;
+        }
 
-        entity.setId(user.getId());
-        entity.setName(user.getName());
-        entity.setEmail(user.getEmail());
-        entity.setPassword(user.getPassword());
-        entity.setRoles(user.getRole());
-        entity.setStatus(user.getStatus());
-        entity.setCreatedAt(user.getCreatedAt());
-        entity.setUpdatedAt(user.getUpdatedAt());
-
-        return entity;
+        return new UserEntity(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getRole(),
+                user.getStatus(),
+                user.getLastLogin(),
+                user.getResetToken(),
+                user.getResetTokenExpiration(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
     }
 }

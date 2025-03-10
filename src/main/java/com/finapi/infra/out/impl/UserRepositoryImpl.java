@@ -22,4 +22,13 @@ public class UserRepositoryImpl implements UserRepository {
 
         return UserMapper.toDomain(savedEntity);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        UserEntity entity = userJpaRepository.findByEmail(email);
+        if (entity == null) {
+            return null;
+        }
+        return UserMapper.toDomain(entity);
+    }
 }

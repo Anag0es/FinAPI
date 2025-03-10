@@ -28,11 +28,7 @@ public class UserEntity {
     private LocalDateTime lastLogin;
     private String resetToken;
     private LocalDateTime resetTokenExpiration;
-
-    @Value("${localDateTime.now}")
     private LocalDateTime createdAt;
-
-    @Value("${localDateTime.now}")
     private LocalDateTime updatedAt;
 
     public UserEntity() {}
@@ -49,6 +45,17 @@ public class UserEntity {
         this.resetTokenExpiration = resetTokenExpiration;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    protected  void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
     public UUID getId() {
@@ -83,11 +90,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Roles getRoles() {
+    public Roles getRole() {
         return role;
     }
 
-    public void setRoles(Roles role) {
+    public void setRole(Roles role) {
         this.role = role;
     }
 

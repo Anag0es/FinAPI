@@ -1,11 +1,13 @@
 package com.finapi.application.service;
 
 import com.finapi.application.dto.CreateUserDTO;
+import com.finapi.application.exception.ApiException;
 import com.finapi.domain.enums.Roles;
 import com.finapi.domain.enums.Status;
 import com.finapi.domain.model.User;
 import com.finapi.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,10 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User createUser(CreateUserDTO createUserDTO) {
+        if(userRepository.findByEmail(createUserDTO.getEmail()) != null) {
+            throw new ApiException("Email já cadastrado", HttpStatus.BAD_REQUEST);
+        }
+
         User user = new User();
         user.setName(createUserDTO.getName());
         user.setEmail(createUserDTO.getEmail());
