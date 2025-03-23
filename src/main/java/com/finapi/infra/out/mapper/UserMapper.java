@@ -1,4 +1,4 @@
-package com.finapi.application.mapper;
+package com.finapi.infra.out.mapper;
 
 import com.finapi.domain.model.User;
 import com.finapi.infra.out.entity.UserEntity;

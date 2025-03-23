@@ -1,16 +1,15 @@
 package com.finapi.infra.out.impl;
 
-import com.finapi.application.exception.ApiException;
-import com.finapi.application.mapper.UserMapper;
+import com.finapi.application.port.out.UserRepository;
+import com.finapi.infra.out.mapper.UserMapper;
 import com.finapi.domain.model.User;
-import com.finapi.domain.repository.UserRepository;
 import com.finapi.infra.out.entity.UserEntity;
 import com.finapi.infra.out.repository.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,11 +30,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByEmail(String email) {
-        UserEntity entity = userJpaRepository.findByEmail(email);
-        if (entity == null) {
-            return null;
-        }
-        return UserMapper.toDomain(entity);
+        return Optional.ofNullable(userJpaRepository.findByEmail(email))
+                .map(UserMapper::toDomain)
+                .orElse(null);
     }
 
     @Override
@@ -50,5 +47,13 @@ public class UserRepositoryImpl implements UserRepository {
         UserEntity entity = userJpaRepository.findById(id).orElse(null);
 
         return UserMapper.toDomain(entity);
+    }
+
+    @Override
+    public User update(User user) {
+        UserEntity entity = UserMapper.toEntity(user);
+        UserEntity updatedEntity = userJpaRepository.save(entity);
+
+        return UserMapper.toDomain(updatedEntity);
     }
 }
