@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: test
+
+jwt:
+  secret: test_jwt_secret_for_unit_tests
+  expirationMillis: 3600000
