@@ -1,4 +1,4 @@
-package com.finapi.infra.in;
+package com.finapi.infra.in.controller;
 
 import com.finapi.application.dto.LoginDTO;
 import com.finapi.application.dto.LoginResponseDTO;
