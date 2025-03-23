@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -22,6 +24,7 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     public User createUser(CreateUserDTO createUserDTO) {
         if(userRepository.findByEmail(createUserDTO.getEmail()) != null) {
@@ -39,4 +42,18 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    public User getUserById(UUID id) {
+        User user = userRepository.findById(id);
+        if(user == null) {
+            throw new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        return user;
+    }
+
 }
