@@ -1,7 +1,8 @@
-package com.finapi.infra.in.controller;
+package com.finapi.infra.in.web;
 
-import com.finapi.application.dto.LoginDTO;
-import com.finapi.application.dto.LoginResponseDTO;
+
+import com.finapi.application.dto.request.LoginDTO;
+import com.finapi.application.dto.response.LoginResponseDTO;
 import com.finapi.application.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class AuthController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO loginRequest) {
-        LoginResponseDTO response = authenticationService.login(loginRequest);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO request) {
+        String token = authenticationService.login(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 }

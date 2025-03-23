@@ -1,45 +1,50 @@
 package com.finapi.application.service;
 
-import com.finapi.application.dto.LoginDTO;
-import com.finapi.application.dto.LoginResponseDTO;
 import com.finapi.application.exception.ApiException;
+import com.finapi.application.port.in.AuthenticationUseCase;
+import com.finapi.application.port.out.UserRepository;
 import com.finapi.domain.model.User;
-import com.finapi.domain.repository.UserRepository;
 import com.finapi.infra.security.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationService implements AuthenticationUseCase {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthenticationService(UserRepository userRepository, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    @Override
+    public String login(String email, String password) {
+        User user = userRepository.findByEmail(email);
 
-    public LoginResponseDTO login(LoginDTO loginRequest) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(loginRequest.getEmail()));
-        if (userOptional.isEmpty()) {
+        if (user == null) {
             throw new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND);
         }
-        User user = userOptional.get();
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new ApiException("Senha inválida", HttpStatus.BAD_REQUEST);
         }
 
         user.setLastLogin(LocalDateTime.now());
-        userRepository.save(user);
+        userRepository.update(user);
 
-        String token = jwtUtil.generateToken(user);
-        return new LoginResponseDTO(token);
+        return jwtUtil.generateToken(user);
+    }
+
+    @Override
+    public UUID getCurrentUserId(String token) {
+        return jwtUtil.getUserIdFromToken(token);
     }
 }
