@@ -1,4 +1,4 @@
-package com.finapi.application.dto;
+package com.finapi.application.dto.request;
 
 public class CreateUserDTO {
 
@@ -6,7 +6,8 @@ public class CreateUserDTO {
     private String email;
     private String password;
 
-    public CreateUserDTO() {}
+    public CreateUserDTO() {
+    }
 
     public CreateUserDTO(String name, String email, String password) {
         this.name = name;

@@ -1,4 +1,4 @@
-package com.finapi.application.dto;
+package com.finapi.application.dto.request;
 
 public class LoginDTO {
 

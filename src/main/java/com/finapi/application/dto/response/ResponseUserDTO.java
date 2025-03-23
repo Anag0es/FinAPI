@@ -1,4 +1,4 @@
-package com.finapi.application.dto;
+package com.finapi.application.dto.response;
 
 import com.finapi.domain.enums.Roles;
 import com.finapi.domain.enums.Status;
