@@ -1,4 +1,4 @@
-package com.finapi.application.port.in;
+package com.finapi.application.port.in.user;
 
 import com.finapi.domain.model.User;
 import java.util.UUID;
