@@ -1,8 +1,8 @@
 package com.finapi.domain.model;
 
+import com.finapi.application.port.out.PaymentMain;
 import com.finapi.domain.enums.PaymentMethodType;
 import com.finapi.domain.enums.PaymentType;
-import com.finapi.domain.repository.PaymentMain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
