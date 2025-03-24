@@ -1,41 +1,55 @@
-package com.finapi.domain.model;
+package com.finapi.infra.out.entity;
 
 import com.finapi.domain.enums.CardType;
 import com.finapi.domain.enums.Status;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
-public class Card {
+@Entity
+@Table(name = "cards")
+public class CardEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private String name;
-    private CardType type;
     private String number;
     private LocalDateTime expiration;
     private BigDecimal limitAmount;
     private String band;
-    private User user;
-    private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Card() {}
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    public Card(UUID id, String name, CardType type, String number, LocalDateTime expiration, BigDecimal limitAmount, String band, User user, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    @Enumerated(EnumType.STRING)
+    private CardType type;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+
+    public CardEntity() {
+    }
+
+    public CardEntity(UUID id, String name, String number, LocalDateTime expiration, BigDecimal limitAmount, String band, LocalDateTime createdAt, LocalDateTime updatedAt, Status status, CardType type, UserEntity user) {
         this.id = id;
         this.name = name;
-        this.type = type;
         this.number = number;
         this.expiration = expiration;
         this.limitAmount = limitAmount;
         this.band = band;
-        this.user = user;
-        this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.status = status;
+        this.type = type;
+        this.user = user;
     }
 
     public UUID getId() {
@@ -52,14 +66,6 @@ public class Card {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public CardType getType() {
-        return type;
-    }
-
-    public void setType(CardType type) {
-        this.type = type;
     }
 
     public String getNumber() {
@@ -94,22 +100,6 @@ public class Card {
         this.band = band;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -124,5 +114,29 @@ public class Card {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public CardType getType() {
+        return type;
+    }
+
+    public void setType(CardType type) {
+        this.type = type;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

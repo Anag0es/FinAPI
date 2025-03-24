@@ -1,0 +1,1 @@
+ALTER TABLE cards RENAME COLUMN brand TO band;

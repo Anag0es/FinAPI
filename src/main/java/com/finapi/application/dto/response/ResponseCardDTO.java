@@ -1,49 +1,34 @@
-package com.finapi.domain.model;
+package com.finapi.application.dto.response;
 
 import com.finapi.domain.enums.CardType;
 import com.finapi.domain.enums.Status;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
-public class Card {
+public class ResponseCardDTO {
 
-    private UUID id;
     private String name;
     private CardType type;
     private String number;
     private LocalDateTime expiration;
     private BigDecimal limitAmount;
     private String band;
-    private User user;
+    private UUID userId;
     private Status status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Card() {}
+    public ResponseCardDTO() {}
 
-    public Card(UUID id, String name, CardType type, String number, LocalDateTime expiration, BigDecimal limitAmount, String band, User user, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public ResponseCardDTO(String name, CardType type, String number, LocalDateTime expiration, BigDecimal limitAmount, String band, UUID userId, Status status) {
         this.name = name;
         this.type = type;
         this.number = number;
         this.expiration = expiration;
         this.limitAmount = limitAmount;
         this.band = band;
-        this.user = user;
+        this.userId = userId;
         this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -94,12 +79,12 @@ public class Card {
         this.band = band;
     }
 
-    public User getUser() {
-        return user;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public Status getStatus() {
@@ -108,21 +93,5 @@ public class Card {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
