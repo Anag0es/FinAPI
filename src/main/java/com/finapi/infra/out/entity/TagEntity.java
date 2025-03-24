@@ -16,6 +16,7 @@ public class TagEntity {
     private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isDefault = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -23,10 +24,11 @@ public class TagEntity {
 
     public TagEntity() {}
 
-    public TagEntity(UUID id, UserEntity user, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public TagEntity(UUID id, UserEntity user, String name, boolean isDefault, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.user = user;
         this.name = name;
+        this.isDefault = isDefault;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -69,5 +71,13 @@ public class TagEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
     }
 }

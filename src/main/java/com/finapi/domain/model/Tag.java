@@ -14,10 +14,11 @@ public class Tag {
 
     public Tag() {}
 
-    public Tag(UUID id, User user, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Tag(UUID id, User user, String name, boolean isDefault, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.user = user;
         this.name = name;
+        this.isDefault = isDefault;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
