@@ -1,9 +1,11 @@
 package com.finapi.infra.in.web;
 
 import com.finapi.application.dto.request.CreateCardDTO;
+import com.finapi.application.dto.response.ResponseCardDTO;
 import com.finapi.application.service.CardService;
 import com.finapi.config.RequiresAuthentication;
 import com.finapi.domain.model.Card;
+import com.finapi.infra.out.mapper.CardMapper;
 import com.finapi.infra.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -26,37 +28,39 @@ public class CardController {
 
     @PostMapping
     @RequiresAuthentication
-    public Card createCard(@RequestBody CreateCardDTO createCardDTO, HttpServletRequest request) {
+    public ResponseCardDTO createCard(@RequestBody CreateCardDTO createCardDTO, HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         UUID userId = jwtUtil.getUserIdFromToken(token);
 
         createCardDTO.setUser(userId);
 
-        return cardService.createCard(createCardDTO);
+        Card card = cardService.createCard(createCardDTO);
+        return CardMapper.toDTO(card);
     }
 
     @GetMapping
     @RequiresAuthentication
-    public List<Card> getCards() {
-        return cardService.getCards();
+    public List<ResponseCardDTO> getCards() {
+        return CardMapper.toDTOList(cardService.getCards());
     }
 
     @GetMapping("/{cardId}")
     @RequiresAuthentication
-    public Card getCard(@PathVariable UUID cardId) {
+    public ResponseCardDTO getCard(@PathVariable UUID cardId) {
 
-        return cardService.getCardById(cardId);
+        return CardMapper.toDTO(cardService.getCardById(cardId));
     }
 
     @PutMapping("/{cardId}")
     @RequiresAuthentication
-    public Card updateCard(@PathVariable UUID cardId, @RequestBody CreateCardDTO createCardDTO, HttpServletRequest request) {
+    public ResponseCardDTO updateCard(@PathVariable UUID cardId, @RequestBody CreateCardDTO createCardDTO, HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         UUID userId = jwtUtil.getUserIdFromToken(token);
 
         createCardDTO.setUser(userId);
 
-        return cardService.updateCard(cardId, createCardDTO);
+        Card card = cardService.updateCard(cardId, createCardDTO);
+        return CardMapper.toDTO(card);
     }
 
     @DeleteMapping("/{cardId}")
