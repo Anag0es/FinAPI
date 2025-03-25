@@ -5,6 +5,7 @@ import com.finapi.application.port.in.transaction.CreateTransactionUseCase;
 import com.finapi.application.port.in.transaction.DeleteTransactionUseCase;
 import com.finapi.application.port.in.transaction.GetTransactionUseCase;
 import com.finapi.application.port.in.transaction.UpdateTransactionUseCase;
+import com.finapi.application.port.out.CardRepository;
 import com.finapi.application.port.out.TagRepository;
 import com.finapi.application.port.out.TransactionRepository;
 import com.finapi.application.port.out.UserRepository;
@@ -20,11 +21,13 @@ public class TransactionService implements CreateTransactionUseCase, GetTransact
 
     private final TransactionRepository transactionRepository;
     private final TagRepository tagRepository;
+    private final CardRepository cardRepository;
     private final UserRepository userRepository;
 
-    public TransactionService(TransactionRepository transactionRepository, TagRepository tagRepository, UserRepository userRepository) {
+    public TransactionService(TransactionRepository transactionRepository, TagRepository tagRepository, CardRepository cardRepository, UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.tagRepository = tagRepository;
+        this.cardRepository = cardRepository;
         this.userRepository = userRepository;
     }
 
@@ -37,9 +40,9 @@ public class TransactionService implements CreateTransactionUseCase, GetTransact
         transaction.setPeriodicity(createTransactionDTO.getPeriodicity());
         transaction.setAvailableBalance(createTransactionDTO.isAvailableBalance());
         transaction.setBankAccount(createTransactionDTO.getBankAccountId() != null ? userRepository.findBankAccountById(createTransactionDTO.getBankAccountId()) : null);
-        transaction.setCard(createTransactionDTO.getCardId() != null ? userRepository.findCardById(createTransactionDTO.getCardId()) : null);
-        transaction.setUser(userRepository.findUserById(createTransactionDTO.getUserId()));
-        transaction.setTagList(tagRepository.findTagsById(createTransactionDTO.getTagIds()));
+        transaction.setCard(createTransactionDTO.getCardId() != null ? cardRepository.findById(createTransactionDTO.getCardId()) : null);
+        transaction.setUser(userRepository.findById(createTransactionDTO.getUserId()));
+        transaction.setTag(tagRepository.findByIds(createTransactionDTO.getTagIds()));
         transaction.setStatus(createTransactionDTO.getStatus());
 
         transaction.setCreatedAt(LocalDateTime.now());

@@ -22,4 +22,6 @@ public interface TagRepository {
     Tag findByNameAndUserId(String name, UUID userId);
 
     boolean existsByNameAndIsDefault(String name, boolean isDefault);
+
+    List<Tag> findByIds(List<UUID> tagIds);
 }
