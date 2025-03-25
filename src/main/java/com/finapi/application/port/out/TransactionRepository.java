@@ -17,4 +17,8 @@ public interface TransactionRepository {
 
     void deleteById(UUID id);
 
+    List<Transaction> findByUserId(UUID userId);
+
+    List<Transaction> findByTagName(String name);
+
 }

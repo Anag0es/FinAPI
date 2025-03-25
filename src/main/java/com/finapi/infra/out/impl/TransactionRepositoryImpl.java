@@ -52,4 +52,18 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     public void deleteById(UUID id) {
         transactionJpaRepository.deleteById(id);
     }
+
+    @Override
+    public List<Transaction> findByUserId(UUID userId) {
+        List<TransactionEntity> entities = transactionJpaRepository.findByUserId(userId);
+
+        return entities.stream().map(TransactionMapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Transaction> findByTagName(String name) {
+        List<TransactionEntity> entities = transactionJpaRepository.finByTagName(name);
+
+        return entities.stream().map(TransactionMapper::toDomain).collect(Collectors.toList());
+    }
 }
