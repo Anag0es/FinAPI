@@ -1,20 +1,30 @@
-package com.finapi.domain.model;
+package com.finapi.infra.out.entity;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Tag {
+@Entity
+@Table(name = "tags")
+public class TagEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private User user;
+
     private String name;
-    private boolean isDefault = false;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isDefault = false;
 
-    public Tag() {}
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
-    public Tag(UUID id, User user, String name, boolean isDefault, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public TagEntity() {}
+
+    public TagEntity(UUID id, UserEntity user, String name, boolean isDefault, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.user = user;
         this.name = name;
@@ -29,14 +39,6 @@ public class Tag {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getName() {
@@ -61,6 +63,14 @@ public class Tag {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public boolean isDefault() {
