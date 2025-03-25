@@ -9,11 +9,12 @@ public interface TransactionRepository {
 
     Transaction save(Transaction transaction);
 
-    Transaction findById(Long id);
+    Transaction findById(UUID id);
 
     List<Transaction> findAll();
 
     Transaction update(UUID id, Transaction transaction);
 
-    void deleteById(Long id);
+    void deleteById(UUID id);
+
 }
