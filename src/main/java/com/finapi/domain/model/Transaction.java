@@ -8,10 +8,11 @@ import com.finapi.domain.enums.TransactionType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class Transaction implements PaymentMain {
 
-    private Long id;
+    private UUID id;
     private TransactionType type;
     private BigDecimal amount;
     private LocalDateTime transactionDate;
@@ -29,7 +30,7 @@ public class Transaction implements PaymentMain {
     public Transaction() {
     }
 
-    public Transaction(Long id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Transaction(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -46,11 +47,11 @@ public class Transaction implements PaymentMain {
         this.updatedAt = updatedAt;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

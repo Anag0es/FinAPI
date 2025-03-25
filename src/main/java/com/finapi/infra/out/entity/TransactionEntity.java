@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public class TransactionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,10 +64,10 @@ public class Transaction {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Transaction() {
+    public TransactionEntity() {
     }
 
-    public Transaction(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public TransactionEntity(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.type = type;
         this.amount = amount;
