@@ -1,6 +1,8 @@
 package com.finapi.application.port.in.bankAccount;
 
+import java.util.UUID;
+
 public interface DeleteBankUseCase {
 
-    void deleteBank(Long bankId);
+    void deleteBank(UUID bankId);
 }
