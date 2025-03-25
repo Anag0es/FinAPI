@@ -1,12 +1,14 @@
 package com.finapi.application.service;
 
 import com.finapi.application.dto.request.CreateTransactionDTO;
+import com.finapi.application.exception.ApiException;
 import com.finapi.application.port.in.transaction.CreateTransactionUseCase;
 import com.finapi.application.port.in.transaction.DeleteTransactionUseCase;
 import com.finapi.application.port.in.transaction.GetTransactionUseCase;
 import com.finapi.application.port.in.transaction.UpdateTransactionUseCase;
 import com.finapi.application.port.out.*;
 import com.finapi.domain.model.Transaction;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -52,32 +54,55 @@ public class TransactionService implements CreateTransactionUseCase, GetTransact
     }
 
     @Override
-    public void deleteTransactionById(UUID id) {
-
-    }
-
-    @Override
     public List<Transaction> getTransactions() {
-        return List.of();
+       return transactionRepository.findAll();
     }
 
     @Override
-    public Transaction getTransactionById(Long id) {
-        return null;
+    public Transaction getTransactionById(UUID id) {
+        return transactionRepository.findById(id);
     }
 
     @Override
-    public List<Transaction> getTransactionsForUser(Long userId) {
-        return List.of();
+    public List<Transaction> getTransactionsForUser(UUID userId) {
+        return transactionRepository.findByUserId(userId);
     }
 
     @Override
-    public List<Transaction> getTransactionsForTag(Long tagId) {
-        return List.of();
+    public List<Transaction> getTransactionsForTag(String name) {
+        return transactionRepository.findByTagName(name);
     }
 
     @Override
     public Transaction updateTransaction(UUID transactionId, CreateTransactionDTO transactionDTO) {
-        return null;
+        Transaction transactionToUpdate = transactionRepository.findById(transactionId);
+
+        if (transactionToUpdate == null) {
+            throw new ApiException("Transação não encontrada", HttpStatus.NOT_FOUND);
+        }
+
+        transactionToUpdate.setType(transactionDTO.getType());
+        transactionToUpdate.setAmount(transactionDTO.getAmount());
+        transactionToUpdate.setDescription(transactionDTO.getDescription());
+        transactionToUpdate.setPeriodicity(transactionDTO.getPeriodicity());
+        transactionToUpdate.setAvailableBalance(transactionDTO.isAvailableBalance());
+        transactionToUpdate.setBankAccount(transactionDTO.getBankAccountId() != null ? bankRepository.findById(transactionDTO.getBankAccountId()) : null);
+        transactionToUpdate.setCard(transactionDTO.getCardId() != null ? cardRepository.findById(transactionDTO.getCardId()) : null);
+        transactionToUpdate.setUser(userRepository.findById(transactionDTO.getUserId()));
+        transactionToUpdate.setTag(tagRepository.findByIds(transactionDTO.getTagIds()));
+        transactionToUpdate.setStatus(transactionDTO.getStatus());
+        transactionToUpdate.setUpdatedAt(LocalDateTime.now());
+
+        return transactionRepository.update(transactionId, transactionToUpdate);
+    }
+
+    @Override
+    public void deleteTransactionById(UUID id) {
+        Transaction transaction = transactionRepository.findById(id);
+        if (transaction == null) {
+            throw new ApiException("Transação não encontrada", HttpStatus.NOT_FOUND);
+        }
+
+        transactionRepository.deleteById(id);
     }
 }
