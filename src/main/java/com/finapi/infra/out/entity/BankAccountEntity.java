@@ -1,14 +1,21 @@
-package com.finapi.domain.model;
+package com.finapi.infra.out.entity;
 
 import com.finapi.domain.enums.Status;
+import com.finapi.domain.model.User;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class BankAccount {
+@Entity
+@Table(name = "bank_account")
+public class BankAccountEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private String name;
     private String type;
     private String bank;
@@ -16,13 +23,13 @@ public class BankAccount {
     private String accountNumber;
     private BigDecimal currentBalance;
     private Status status;
-    private User user;
+    private UserEntity user;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public BankAccount() {}
+    public BankAccountEntity() {}
 
-    public BankAccount(UUID id, String name, String type, String bank, String branch, String accountNumber, BigDecimal currentBalance, Status status, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public BankAccountEntity(UUID id, String name, String type, String bank, String branch, String accountNumber, BigDecimal currentBalance, Status status, UserEntity user, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -100,11 +107,11 @@ public class BankAccount {
         this.status = status;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

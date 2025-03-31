@@ -1,36 +1,73 @@
-package com.finapi.domain.model;
+package com.finapi.infra.out.entity;
 
-import com.finapi.application.port.out.PaymentMain;
 import com.finapi.domain.enums.PeriodicityType;
 import com.finapi.domain.enums.TransactionStatus;
 import com.finapi.domain.enums.TransactionType;
+import com.finapi.domain.model.BankAccount;
+import com.finapi.domain.model.Card;
+import com.finapi.domain.model.Tag;
+import com.finapi.domain.model.User;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class Transaction implements PaymentMain {
+@Entity
+@Table(name = "transactions")
+public class TransactionEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    @Enumerated(EnumType.STRING)
     private TransactionType type;
+
     private BigDecimal amount;
+
     private LocalDateTime transactionDate;
+
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private PeriodicityType periodicity;
+
     private boolean isAvailableBalance;
+
+    @ManyToOne
     private BankAccount bankAccount;
+
+    @ManyToOne
     private Card card;
+
+    @ManyToOne
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "transaction_tags",
+            joinColumns = @JoinColumn(name = "transaction_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
     private List<Tag> tag;
+
+    @Enumerated(EnumType.STRING)
     private TransactionStatus status;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Transaction() {
+    public TransactionEntity() {
     }
 
-    public Transaction(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public TransactionEntity(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -135,6 +172,14 @@ public class Transaction implements PaymentMain {
         this.tag = tag;
     }
 
+    public TransactionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TransactionStatus status) {
+        this.status = status;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -149,13 +194,5 @@ public class Transaction implements PaymentMain {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public TransactionStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TransactionStatus status) {
-        this.status = status;
     }
 }

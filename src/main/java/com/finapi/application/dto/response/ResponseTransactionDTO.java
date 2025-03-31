@@ -1,16 +1,19 @@
-package com.finapi.domain.model;
+package com.finapi.application.dto.response;
 
-import com.finapi.application.port.out.PaymentMain;
 import com.finapi.domain.enums.PeriodicityType;
 import com.finapi.domain.enums.TransactionStatus;
 import com.finapi.domain.enums.TransactionType;
+import com.finapi.domain.model.BankAccount;
+import com.finapi.domain.model.Card;
+import com.finapi.domain.model.Tag;
+import com.finapi.domain.model.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class Transaction implements PaymentMain {
+public class ResponseTransactionDTO {
 
     private UUID id;
     private TransactionType type;
@@ -21,16 +24,15 @@ public class Transaction implements PaymentMain {
     private boolean isAvailableBalance;
     private BankAccount bankAccount;
     private Card card;
-    private User user;
+    private UUID userId;
     private List<Tag> tag;
     private TransactionStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Transaction() {
-    }
+    public ResponseTransactionDTO() {}
 
-    public Transaction(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ResponseTransactionDTO(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, UUID userId, List<Tag> tag, TransactionStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -40,9 +42,9 @@ public class Transaction implements PaymentMain {
         this.isAvailableBalance = isAvailableBalance;
         this.bankAccount = bankAccount;
         this.card = card;
-        this.user = user;
-        this.status = status;
+        this.userId = userId;
         this.tag = tag;
+        this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -119,12 +121,12 @@ public class Transaction implements PaymentMain {
         this.card = card;
     }
 
-    public User getUser() {
-        return user;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public List<Tag> getTag() {
@@ -133,6 +135,14 @@ public class Transaction implements PaymentMain {
 
     public void setTag(List<Tag> tag) {
         this.tag = tag;
+    }
+
+    public TransactionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TransactionStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -149,13 +159,5 @@ public class Transaction implements PaymentMain {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public TransactionStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TransactionStatus status) {
-        this.status = status;
     }
 }

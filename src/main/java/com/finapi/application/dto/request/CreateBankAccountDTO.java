@@ -1,14 +1,13 @@
-package com.finapi.domain.model;
+package com.finapi.application.dto.request;
 
 import com.finapi.domain.enums.Status;
+import com.finapi.domain.model.User;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class BankAccount {
+public class CreateBankAccountDTO {
 
-    private UUID id;
     private String name;
     private String type;
     private String bank;
@@ -16,14 +15,11 @@ public class BankAccount {
     private String accountNumber;
     private BigDecimal currentBalance;
     private Status status;
-    private User user;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private UUID userId;
 
-    public BankAccount() {}
+    public CreateBankAccountDTO() {}
 
-    public BankAccount(UUID id, String name, String type, String bank, String branch, String accountNumber, BigDecimal currentBalance, Status status, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public CreateBankAccountDTO(String name, String type, String bank, String branch, String accountNumber, BigDecimal currentBalance, Status status, UUID userId) {
         this.name = name;
         this.type = type;
         this.bank = bank;
@@ -31,17 +27,7 @@ public class BankAccount {
         this.accountNumber = accountNumber;
         this.currentBalance = currentBalance;
         this.status = status;
-        this.user = user;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+        this.userId = userId;
     }
 
     public String getName() {
@@ -100,27 +86,11 @@ public class BankAccount {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }

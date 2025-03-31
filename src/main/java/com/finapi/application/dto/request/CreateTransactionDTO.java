@@ -1,58 +1,46 @@
-package com.finapi.domain.model;
+package com.finapi.application.dto.request;
 
-import com.finapi.application.port.out.PaymentMain;
 import com.finapi.domain.enums.PeriodicityType;
 import com.finapi.domain.enums.TransactionStatus;
 import com.finapi.domain.enums.TransactionType;
+import com.finapi.domain.model.BankAccount;
+import com.finapi.domain.model.Card;
+import com.finapi.domain.model.Tag;
+import com.finapi.domain.model.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class Transaction implements PaymentMain {
+public class CreateTransactionDTO {
 
-    private UUID id;
     private TransactionType type;
     private BigDecimal amount;
     private LocalDateTime transactionDate;
     private String description;
     private PeriodicityType periodicity;
     private boolean isAvailableBalance;
-    private BankAccount bankAccount;
-    private Card card;
-    private User user;
-    private List<Tag> tag;
+    private UUID bankAccountId;
+    private UUID cardId;
+    private UUID userId;
+    private List<UUID> tagIds;
     private TransactionStatus status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Transaction() {
-    }
+    public CreateTransactionDTO() {}
 
-    public Transaction(UUID id, TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, BankAccount bankAccount, Card card, User user, TransactionStatus status, List<Tag> tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public CreateTransactionDTO(TransactionType type, BigDecimal amount, LocalDateTime transactionDate, String description, PeriodicityType periodicity, boolean isAvailableBalance, UUID bankAccountId, UUID cardId, UUID userId, List<UUID> tagIds, TransactionStatus status) {
         this.type = type;
         this.amount = amount;
         this.transactionDate = transactionDate;
         this.description = description;
         this.periodicity = periodicity;
         this.isAvailableBalance = isAvailableBalance;
-        this.bankAccount = bankAccount;
-        this.card = card;
-        this.user = user;
+        this.bankAccountId = bankAccountId;
+        this.cardId = cardId;
+        this.userId = userId;
+        this.tagIds = tagIds;
         this.status = status;
-        this.tag = tag;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public TransactionType getType() {
@@ -103,52 +91,36 @@ public class Transaction implements PaymentMain {
         isAvailableBalance = availableBalance;
     }
 
-    public BankAccount getBankAccount() {
-        return bankAccount;
+    public UUID getBankAccountId() {
+        return bankAccountId;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
+    public void setBankAccountId(UUID bankAccountId) {
+        this.bankAccountId = bankAccountId;
     }
 
-    public Card getCard() {
-        return card;
+    public UUID getCardId() {
+        return cardId;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCardId(UUID cardId) {
+        this.cardId = cardId;
     }
 
-    public User getUser() {
-        return user;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
-    public List<Tag> getTag() {
-        return tag;
+    public List<UUID> getTagIds() {
+        return tagIds;
     }
 
-    public void setTag(List<Tag> tag) {
-        this.tag = tag;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setTagIds(List<UUID> tagIds) {
+        this.tagIds = tagIds;
     }
 
     public TransactionStatus getStatus() {
